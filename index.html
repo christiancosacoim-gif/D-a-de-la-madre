@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjeta para Mamá</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#12070f;
+      --panel:#23101b;
+      --line:rgba(255,128,175,.22);
+      --text:#f7e0e8;
+      --muted:#d9aebd;
+      --faint:#a77789;
+      --accent:#ff4f96;
+      --shadow:0 16px 50px rgba(0,0,0,.35);
+      --radius:24px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      font-family:'Cormorant Garamond',serif;
+      background:
+        radial-gradient(circle at 50% 8%, rgba(255,90,150,.25), transparent 20%),
+        linear-gradient(180deg,#2a1120 0%, #160812 36%, #0c050d 100%);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    .page{width:min(100%,520px);margin:0 auto;min-height:100vh;position:relative;padding:24px 16px 40px}
+    .grain{position:absolute;inset:0;pointer-events:none;opacity:.08;background-image:radial-gradient(rgba(255,255,255,.8) .45px, transparent .8px);background-size:10px 10px}
+    .hearts span{position:absolute;bottom:-10%;width:18px;height:18px;background:rgba(255,105,165,.7);transform:rotate(45deg);border-radius:3px;animation:floatUp linear infinite}
+    .hearts span::before,.hearts span::after{content:"";position:absolute;width:18px;height:18px;background:inherit;border-radius:50%}
+    .hearts span::before{left:-9px}.hearts span::after{top:-9px}
+    .hearts span:nth-child(1){left:10%;animation-duration:13s;animation-delay:-2s}
+    .hearts span:nth-child(2){left:22%;animation-duration:16s;animation-delay:-7s;transform:scale(.8) rotate(45deg)}
+    .hearts span:nth-child(3){left:40%;animation-duration:14s;animation-delay:-5s}
+    .hearts span:nth-child(4){left:58%;animation-duration:18s;animation-delay:-9s;transform:scale(1.1) rotate(45deg)}
+    .hearts span:nth-child(5){left:74%;animation-duration:15s;animation-delay:-4s}
+    .hearts span:nth-child(6){left:88%;animation-duration:17s;animation-delay:-11s;transform:scale(.7) rotate(45deg)}
+    @keyframes floatUp{0%{transform:translateY(0) scale(.6) rotate(45deg);opacity:0}15%{opacity:.7}100%{transform:translateY(-120vh) scale(1.2) rotate(45deg);opacity:0}}
+    header{position:relative;z-index:2;display:grid;place-items:center;gap:16px;padding-top:8px;text-align:center}
+    .halo{width:min(60vw,240px);aspect-ratio:1;border-radius:50%;padding:10px;background:linear-gradient(145deg, rgba(255,90,154,.96), rgba(80,18,46,.92));box-shadow:0 0 0 4px rgba(255,89,150,.2), 0 0 34px rgba(255,89,150,.28);position:relative}
+    .halo::before,.halo::after{content:"";position:absolute;inset:-10px;border-radius:50%;border:2px solid rgba(255,120,180,.45)}
+    .halo::after{inset:8px;border-color:rgba(255,200,225,.28)}
+    .photo{width:100%;height:100%;border-radius:50%;overflow:hidden;background:#000}
+    .photo img{width:100%;height:100%;object-fit:cover}
+    .subtitle{letter-spacing:.2em;text-transform:uppercase;font-size:.9rem;color:var(--muted)}
+    h1{font-family:'Great Vibes',cursive;font-size:clamp(3rem,2rem + 5vw,4.8rem);font-weight:400;line-height:1;text-shadow:0 0 20px rgba(255,102,163,.15)}
+    main{position:relative;z-index:2;display:grid;gap:22px;margin-top:20px}
+    .card{background:linear-gradient(180deg, rgba(67,23,45,.82), rgba(37,13,27,.88));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+    .hero-mother{padding:14px}.hero-mother img{width:100%;display:block;border-radius:18px;aspect-ratio:9/16;object-fit:cover}
+    .player{padding:18px;overflow:hidden}
+    .player-top{display:grid;grid-template-columns:52px 1fr auto;gap:14px;align-items:center}
+    .icon-wrap{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle, rgba(255,90,150,.25), rgba(255,90,150,.08));box-shadow:0 0 20px rgba(255,90,150,.14)}
+    .player h2{font-size:1.35rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+    .tiny{font-size:1rem;color:var(--muted)}
+    .timer{font-size:1rem;color:var(--muted)}
+    .audio-box{margin-top:16px;padding:14px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08)}
+    .audio-box p{font-size:1rem;color:var(--muted);text-align:center;margin-bottom:10px}
+    audio{width:100%;border-radius:12px}
+    .divider{display:flex;align-items:center;gap:12px;color:var(--accent)}
+    .divider::before,.divider::after{content:"";height:1px;flex:1;background:linear-gradient(90deg, transparent, rgba(255,79,150,.55), transparent)}
+    .divider span{font-size:1.5rem;filter:drop-shadow(0 0 8px rgba(255,79,150,.45))}
+    .message-head{text-align:center;display:grid;gap:8px}
+    .message-head h3{font-family:'Great Vibes',cursive;font-size:clamp(2rem,1.4rem + 3vw,3.2rem);font-weight:400}
+    .message-card{padding:18px;position:relative;overflow:hidden}
+    .message-card::before,.message-card::after{content:"";position:absolute;width:70px;height:70px;border:1px solid rgba(255,120,175,.22)}
+    .message-card::before{left:16px;top:16px;border-right:none;border-bottom:none}
+    .message-card::after{right:16px;bottom:16px;border-left:none;border-top:none}
+    .message-body{padding:48px 18px 28px;text-align:center;min-height:280px;display:grid;align-content:center;gap:18px}
+    .lyrics{font-size:1.42rem;line-height:1.6;color:#f5dfe7;white-space:normal;text-align:center}
+    .lyrics p{margin-bottom:12px}.lyrics p:last-child{margin-bottom:0}
+    .heart-center{font-size:3rem;line-height:1;color:#ffdfe9;text-shadow:0 0 20px rgba(255,140,190,.4);animation:pulse 2.4s ease-in-out infinite;margin-bottom:6px}
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.12);opacity:1}}
+    .closing{font-family:'Great Vibes',cursive;font-size:clamp(2rem,1.5rem + 1.5vw,2.6rem);color:#ffc5d8}
+    .roses{margin-top:6px;padding:14px;border-radius:20px;border:1px solid rgba(255,150,190,.14);background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));display:grid;gap:10px}
+    .roses img{width:100%;border-radius:16px;display:block}
+    .note{text-align:center;color:var(--faint);font-size:1rem}
+    @media (min-width:700px){.page{padding-top:30px}.message-body{min-height:320px}}
+    @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="grain"></div>
+    <div class="hearts" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <header>
+      <div class="halo">
+        <div class="photo">
+          <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/4faacdb5a50c39c1f8b7ee6925177333f649ceae.jpg" alt="Ramo de rosas rosadas" />
+        </div>
+      </div>
+      <p class="subtitle">Con todo mi amor</p>
+      <h1>Feliz Día, Mamá</h1>
+    </header>
+
+    <main>
+      <section class="card hero-mother">
+        <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/c0ed52d911d0e1f2da3a9959682b2e91a5e3fc1b.jpg" alt="Imagen representativa de vínculo entre madre e hijo" />
+      </section>
+
+      <section class="card player">
+        <div class="player-top">
+          <div class="icon-wrap" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 9a4 4 0 0 1-8 0"/>
+              <path d="M12 5c3 0 6 2 6 5v6a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-6c0-3 3-5 6-5Z"/>
+              <path d="M9 14h.01M15 14h.01"/>
+            </svg>
+          </div>
+          <div>
+            <h2>A la Sombra de Mi Madre</h2>
+            <p class="tiny">Canción integrada en la tarjeta</p>
+          </div>
+          <div class="timer">Auto</div>
+        </div>
+        <div class="audio-box">
+          <p>Audio local integrado en la tarjeta con autoplay y loop.</p>
+          <audio controls autoplay loop preload="auto">
+            <source src="./A-la-Sombra-de-Mi-MADRE-LeoDan.mp3" type="audio/mpeg">
+            Tu navegador no soporta audio HTML.
+          </audio>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"><span>♥</span></div>
+
+      <section class="message-head">
+        <h3>Mensaje para mamá</h3>
+        <p class="note">Un mensaje completo, presentado con el estilo de la tarjeta.</p>
+      </section>
+
+      <section class="card message-card">
+        <div class="message-body">
+          <div class="heart-center" aria-hidden="true">♥</div>
+          <div class="lyrics" id="lyrics">
+            <p>Mamá, no existe en el mundo entero una palabra tan poderosa como la que te nombra a ti. Eres el primer abrazo que conocí, la voz que calmó mis miedos, la fuerza que me enseñó a caminar incluso cuando el camino era difícil.</p>
+            <p>Cada logro que alcanzo lleva tu huella. Cada sonrisa que doy tiene tu origen. Hoy, en este día tan especial, quiero que sepas que eres y que siempre serás lo más grande de mi vida.</p>
+            <p>Gracias por existir. Gracias por elegirme. Gracias por ser mi mamá.</p>
+          </div>
+          <p class="closing">Te amo</p>
+        </div>
+      </section>
+
+      <section class="roses">
+        <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/4faacdb5a50c39c1f8b7ee6925177333f649ceae.jpg" alt="Ramo de rosas rosadas al final de la tarjeta" />
+      </section>
+    </main>
+  </div>
+</body>
+</html>
